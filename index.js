@@ -1,6 +1,6 @@
 const nba = require('./nba-stats.js');
 
-options = {
+game = {
   gameId: '0021401082'
 }
 
@@ -9,11 +9,6 @@ player = {
   startSeason: '2009-10'
 }
 
-nba.playByPlay(options, (data) => {
-  const rowSet = data.resultSets[0].rowSet;
-  console.log(rowSet);
+nba.boxScoreTraditional(game, (data) => {
+  console.log(data);
 });
-
-// nba.playerProfile(player, (data) => {
-//   console.log(data);
-// });
