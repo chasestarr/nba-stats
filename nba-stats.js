@@ -41,10 +41,6 @@ function playerProfile(options, cb){
   });
 }
 
-function getJSON(url){
-
-}
-
 module.exports = {
   playByPlay: playByPlay,
   playerProfile: playerProfile
