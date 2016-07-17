@@ -9,7 +9,7 @@ function playByPlay(options, cb){
   let endPeriod = options.endPeriod ? options.endPeriod : 4;
   let url = api + endpoint + `gameId=${gameId}&startPeriod=${startPeriod}&endPeriod=${endPeriod}`;
 
-  getJSON(url, (data) => {
+  getData(url, (data) => {
     cb(data);
   });
 }
@@ -27,12 +27,12 @@ function playerProfile(options, cb){
   let graphStat = options.graphStat ? options.graphStat : 'PTS';
   let url = api + endpoint + `playerId=${playerId}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&graphstartSeason=${startSeason}&graphEndSeason=${graphEndSeason}&graphStat=${graphStat}`;
 
-  getJSON(url, (data) => {
+  getData(url, (data) => {
     cb(data);
   });
 }
 
-function getJSON(url, cb){
+function getData(url, cb){
   request({url: url, json: true}, function (error, response) {
     console.log(url);
     if (!error && response.statusCode == 200) {
