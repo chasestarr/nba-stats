@@ -1,15 +1,25 @@
 {
   "name": "nba-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Node.js module for the NBA stats API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "Chase Starr <chasestarr@gmail.com>",
   "license": "ISC",
+  "repository": "chasestarr/nba-stats",
   "dependencies": {
     "request": "^2.73.0"
-  }
+  },
+  "keywords": [
+    "nba-stats",
+    "nba",
+    "api",
+    "basketball",
+    "scores",
+    "games",
+    "teams"
+  ]
 }
