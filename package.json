@@ -10,8 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nba": "^2.0.1",
-    "node-fetch": "^1.5.3",
     "request": "^2.73.0"
   }
 }
