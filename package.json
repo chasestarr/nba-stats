@@ -4,10 +4,9 @@
   "description": "Simple Node.js module for the NBA stats API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Chase Starr <chasestarr@gmail.com>",
+  "author": "Chase Starr <chasestarr@gmail.com> (http://chasestarr.github.io/)",
   "license": "ISC",
   "repository": "chasestarr/nba-stats",
   "dependencies": {
