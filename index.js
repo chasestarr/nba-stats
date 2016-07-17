@@ -9,11 +9,11 @@ player = {
   startSeason: '2009-10'
 }
 
-// nba.playByPlay(options, (data) => {
-//   const rowSet = data.resultSets[0].rowSet;
-//   console.log(rowSet);
-// });
-
-nba.playerProfile(player, (data) => {
-  console.log(data);
+nba.playByPlay(options, (data) => {
+  const rowSet = data.resultSets[0].rowSet;
+  console.log(rowSet);
 });
+
+// nba.playerProfile(player, (data) => {
+//   console.log(data);
+// });

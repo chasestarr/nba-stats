@@ -9,12 +9,8 @@ function playByPlay(options, cb){
   let endPeriod = options.endPeriod ? options.endPeriod : 4;
   let url = api + endpoint + `gameId=${gameId}&startPeriod=${startPeriod}&endPeriod=${endPeriod}`;
 
-  request({url: url, json: true}, function (error, response) {
-    if (!error && response.statusCode == 200) {
-      cb(response.body);
-    } else {
-      return console.error('nba server error:', response.statusCode);
-    }
+  getJSON(url, (data) => {
+    cb(data);
   });
 }
 
@@ -31,6 +27,12 @@ function playerProfile(options, cb){
   let graphStat = options.graphStat ? options.graphStat : 'PTS';
   let url = api + endpoint + `playerId=${playerId}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&graphstartSeason=${startSeason}&graphEndSeason=${graphEndSeason}&graphStat=${graphStat}`;
 
+  getJSON(url, (data) => {
+    cb(data);
+  });
+}
+
+function getJSON(url, cb){
   request({url: url, json: true}, function (error, response) {
     console.log(url);
     if (!error && response.statusCode == 200) {
