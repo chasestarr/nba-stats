@@ -1,4 +1,4 @@
-const nba = require('./nba-stats.js');
+const nba = require('./index.js');
 
 game = {
   gameId: '0021401082'
@@ -9,6 +9,8 @@ player = {
   startSeason: '2009-10'
 }
 
-nba.boxScoreTraditional(game, (data) => {
+nba.commonTeamRoster({teamId: '1610612748'}, print);
+
+function print(data){
   console.log(data);
-});
+}

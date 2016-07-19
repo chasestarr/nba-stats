@@ -1,5 +1,6 @@
 const request = require('request');
 const api = 'http://stats.nba.com/stats';
+const DEFAULT_SEASON = '2015-16';
 
 function boxScore(options, cb){
   if(!options.gameId) return console.log('gameId required');
@@ -132,16 +133,75 @@ function playByPlay(options, cb){
   });
 }
 
+function commonTeamYears(options, cb){
+  let endpoint = '/commonTeamYears?';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let url = api + endpoint + `leagueId=${leagueId}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function commonAllPlayers(options, cb){
+  if(!options.season) console.log('using default season: ' + DEFAULT_SEASON);
+  let endpoint = '/commonAllPlayers?';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let isOnlyCurrentSeason = options.isOnlyCurrentSeason ? options.isOnlyCurrentSeason : 1;
+  let url = api + endpoint + `leagueId=${leagueId}&season=${season}&isOnlyCurrentSeason=${isOnlyCurrentSeason}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function commonPlayerInfo(options, cb){
+  if(!options.playerId) return console.log('playerId required');
+  let endpoint = '/commonPlayerInfo?';
+  let playerId = options.playerId;
+  let url = api + endpoint + `playerId=${playerId}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function commonPlayoffSeries(options, cb){
+  if(!options.season) console.log('using default season: ' + DEFAULT_SEASON);
+  let endpoint = '/commonPlayoffSeries?';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let url = api + endpoint + `leagueId=${leagueId}&season=${season}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function commonTeamRoster(options, cb){
+  if(!options.teamId) return console.log('teamId required');
+  if(!options.season) console.log('using default season: ' + DEFAULT_SEASON);
+  let endpoint = '/commonTeamRoster?';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let teamId = options.teamId;
+  let url = api + endpoint + `season=${season}&teamId=${teamId}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
 function playerProfile(options, cb){
   if(!options.playerId) return console.log('playerId required');
   if(!options.startSeason) return console.log('startSeason required');
   let endpoint = '/playerprofile?';
   let playerId = options.playerId;
   let leagueId = options.leagueId ? options.leagueId : '00';
-  let season = options.season ? options.season : '2015-16';
+  let season = options.season ? options.season : DEFAULT_SEASON;
   let seasonType = options.seasonType ? options.seasonType : 'Regular Season';
   let startSeason = options.startSeason;
-  let graphEndSeason = options.graphEndSeason ? options.graphEndSeason : '2015-16';
+  let graphEndSeason = options.graphEndSeason ? options.graphEndSeason : DEFAULT_SEASON;
   let graphStat = options.graphStat ? options.graphStat : 'PTS';
   let url = api + endpoint + `playerId=${playerId}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&graphstartSeason=${startSeason}&graphEndSeason=${graphEndSeason}&graphStat=${graphStat}`;
 
@@ -171,5 +231,10 @@ module.exports = {
   boxScoreMisc: boxScoreMisc,
   boxScorePlayerTrack: boxScorePlayerTrack,
   boxScoreScoring: boxScoreScoring,
-  boxScoreTraditional: boxScoreTraditional
+  boxScoreTraditional: boxScoreTraditional,
+  commonTeamYears: commonTeamYears,
+  commonAllPlayers: commonAllPlayers,
+  commonPlayerInfo: commonPlayerInfo,
+  commonPlayoffSeries: commonPlayoffSeries,
+  commonTeamRoster: commonTeamRoster
 }

@@ -1,5 +1,5 @@
 {
-  "name": "nba-node",
+  "name": "nba-stats",
   "version": "1.0.0",
   "description": "Simple Node.js module for the NBA stats API",
   "main": "index.js",
