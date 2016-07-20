@@ -221,18 +221,7 @@ function playerProfile(options, cb){
   let graphStartSeason = options.graphStartSeason;
   let graphEndSeason = options.graphEndSeason ? options.graphEndSeason : DEFAULT_SEASON;
   let graphStat = options.graphStat ? options.graphStat : 'PTS';
-
-  let params = {
-    playerId: options.playerId,
-    leagueId: options.leagueId ? options.leagueId : '00',
-    season: options.season ? options.season : DEFAULT_SEASON,
-    seasonType: options.seasonType ? options.seasonType : 'Regular Season',
-    graphStartSeason: options.graphStartSeason,
-    graphEndSeason: options.graphEndSeason ? options.graphEndSeason : DEFAULT_SEASON,
-    graphStat: options.graphStat ? options.graphStat : 'PTS'
-  }
-
-  let url = api + endpoint + queryString(params);
+  let url = api + endpoint + `playerId=${playerId}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&graphstartSeason=${graphStartSeason}&graphEndSeason=${graphEndSeason}&graphStat=${graphStat}`;
 
   getData(url, (data) => {
     cb(data);
