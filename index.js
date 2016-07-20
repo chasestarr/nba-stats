@@ -192,6 +192,24 @@ function commonTeamRoster(options, cb){
   });
 }
 
+function homepage(options, cb){
+  if(!options.playerOrTeam) return console.log('playerOrTeam required');
+  if(!options.season) console.log('using default season: ' + DEFAULT_SEASON);
+  let endpoint = '/homepagev2?';
+  let gameScope = options.gameScope ? options.gameScope : 'Season';
+  let statType = options.statType ? options.statType : 'Traditional';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let seasonType = options.seasonType ? options.seasonType : 'Regular Season';
+  let playerOrTeam = options.playerOrTeam;
+  let playerScope = options.playerScope ? options.playerScope : 'All Players';
+  let url = api + endpoint + `gameScope=${gameScope}&statType=${statType}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&playerorteam=${playerOrTeam}&playerScope=${playerScope}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
 function playerProfile(options, cb){
   if(!options.playerId) return console.log('playerId required');
   if(!options.startSeason) return console.log('startSeason required');
@@ -236,5 +254,6 @@ module.exports = {
   commonAllPlayers: commonAllPlayers,
   commonPlayerInfo: commonPlayerInfo,
   commonPlayoffSeries: commonPlayoffSeries,
-  commonTeamRoster: commonTeamRoster
+  commonTeamRoster: commonTeamRoster,
+  homepage: homepage
 }

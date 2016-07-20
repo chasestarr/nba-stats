@@ -9,7 +9,7 @@ player = {
   startSeason: '2009-10'
 }
 
-nba.commonTeamRoster({teamId: '1610612748'}, print);
+nba.homepage({playerOrTeam: 'Player'}, print);
 
 function print(data){
   console.log(data);
