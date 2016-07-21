@@ -247,6 +247,49 @@ function playerProfile(options, cb){
   });
 }
 
+function leagueDashPlayerBioStats(options, cb){
+  let endpoint = '/leaguedashplayerbiostats?';
+  let perMode = options.perMode ? options.perMode : 'Totals';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let seasonType = options.seasonType ? options.seasonType : 'Regular Season';
+  let teamId = options.teamId ? options.teamId : '';
+  let playerPosition = options.playerPosition ? options.playerPosition : '';
+  let lastNGames = options.lastNGames ? options.lastNGames : '';
+  let opponentTeamId = options.opponentTeamId ? options.opponentTeamId : '';
+  let url = api + endpoint + `perMode=${perMode}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}&teamId=${teamId}&playerPosition=${playerPosition}&lastNGames=${lastNGames}&opponentTeamId=${opponentTeamId}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function leagueDashPlayerPtShot(options, cb){
+  let endpoint = '/leaguedashplayerptshot?';
+  let perMode = options.perMode ? options.perMode : 'Totals';
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let seasonType = options.seasonType ? options.seasonType : 'Regular Season';
+  let url = api + endpoint + `perMode=${perMode}&leagueId=${leagueId}&season=${season}&seasonType=${seasonType}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
+function playerGameLog(options, cb){
+  if(!options.playerId) return console.log('playerId required');
+  let endpoint = '/playergamelog?';
+  let playerId = options.playerId;
+  let season = options.season ? options.season : DEFAULT_SEASON;
+  let seasonType = options.seasonType ? options.seasonType : 'Regular Season';
+  let url = api + endpoint + `playerId=${playerId}&season=${season}&seasonType=${seasonType}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
 function getData(url, cb){
   request({url: url, json: true}, function (error, response) {
     console.log(url);
@@ -283,5 +326,8 @@ module.exports = {
   commonPlayoffSeries: commonPlayoffSeries,
   commonTeamRoster: commonTeamRoster,
   homepage: homepage,
-  leadersTiles: leadersTiles
+  leadersTiles: leadersTiles,
+  leagueDashPlayerBioStats: leagueDashPlayerBioStats,
+  leagueDashPlayerPtShot: leagueDashPlayerPtShot,
+  playerGameLog: playerGameLog
 }

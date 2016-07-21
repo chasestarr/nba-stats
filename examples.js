@@ -9,8 +9,8 @@ player = {
   graphStartSeason: '2009-10'
 }
 
-nba.leadersTiles({stat: 'FG_PCT', playerOrTeam: 'Player'}, print);
+nba.playerGameLog(player, print);
 
 function print(data){
-  console.log(data);
+  console.log(data.resultSets);
 }
