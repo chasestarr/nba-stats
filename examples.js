@@ -9,7 +9,8 @@ player = {
   graphStartSeason: '2009-10'
 }
 
-nba.playerGameLog(player, print);
+// nba.playerProfileV2(player, print);
+nba.scoreBoard({gameDate: '07/16/2016'}, print);
 
 function print(data){
   console.log(data.resultSets);

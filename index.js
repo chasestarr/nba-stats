@@ -247,6 +247,18 @@ function playerProfile(options, cb){
   });
 }
 
+function playerProfileV2(options, cb){
+  if(!options.playerId) return console.log('playerId required');
+  let endpoint = '/playerprofilev2?';
+  let playerId = options.playerId;
+  let perMode = options.perMode ? options.permode : 'Totals';
+  let url = api + endpoint + `playerId=${playerId}&perMode=${perMode}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
 function leagueDashPlayerBioStats(options, cb){
   let endpoint = '/leaguedashplayerbiostats?';
   let perMode = options.perMode ? options.perMode : 'Totals';
@@ -290,8 +302,25 @@ function playerGameLog(options, cb){
   });
 }
 
+function scoreBoard(options, cb){
+  if(!options.gameDate) return console.log('gameDate required');
+  let endpoint = '/scoreboardv2?';
+  let gameDate = options.gameDate;
+  let leagueId = options.leagueId ? options.leagueId : '00';
+  let dayOffset = options.dayOffset ? options.dayOffset : '0';
+  let url = api + endpoint + `gameDate=${gameDate}&leagueId=${leagueId}&dayOffset=${dayOffset}`;
+
+  getData(url, (data) => {
+    cb(data);
+  });
+}
+
 function getData(url, cb){
-  request({url: url, json: true}, function (error, response) {
+  let options = {
+    url: url,
+    headers: {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:32.0) Gecko/20100101 Firefox/32.0'}
+  }
+  request({url: options, json: true}, function (error, response) {
     console.log(url);
     if (!error && response.statusCode == 200) {
       cb(response.body);
@@ -312,6 +341,7 @@ function queryString(params){
 module.exports = {
   playByPlay: playByPlay,
   playerProfile: playerProfile,
+  playerProfileV2: playerProfileV2,
   boxScoreSummary: boxScoreSummary,
   boxScoreUsage: boxScoreUsage,
   boxScore: boxScore,
@@ -329,5 +359,6 @@ module.exports = {
   leadersTiles: leadersTiles,
   leagueDashPlayerBioStats: leagueDashPlayerBioStats,
   leagueDashPlayerPtShot: leagueDashPlayerPtShot,
-  playerGameLog: playerGameLog
+  playerGameLog: playerGameLog,
+  scoreBoard: scoreBoard
 }
