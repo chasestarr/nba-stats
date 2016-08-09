@@ -1,4 +1,5 @@
 const request = require('request');
+const cheerio = require('cheerio');
 const api = 'http://stats.nba.com/stats';
 const DEFAULT_SEASON = '2015-16';
 
@@ -304,21 +305,44 @@ function playerGameLog(options, cb){
 
 function scoreBoard(options, cb){
   if(!options.gameDate) return console.log('gameDate required');
-  let endpoint = '/scoreboardv2?';
-  let gameDate = options.gameDate;
-  let leagueId = options.leagueId ? options.leagueId : '00';
-  let dayOffset = options.dayOffset ? options.dayOffset : '0';
-  let url = api + endpoint + `gameDate=${gameDate}&leagueId=${leagueId}&dayOffset=${dayOffset}`;
+  let gameDate = options.gameDate.split('/');
+  let url = `http://scores.nbcsports.msnbc.com/nba/scoreboard.asp?day=${gameDate[2]}${gameDate[0]}${gameDate[1]}`
+  request(url, function(error, response, body){
+    console.log(url);
+    let $ = cheerio.load(body);
+    let games = $('.shsTable.shsLinescore');
+    let output = [];
 
-  getData(url, (data) => {
-    cb(data);
-  });
+    games.each(function(i, item){
+      let isFinal = $(item).find('.shsTableTtlRow').children().first().text();
+      let awayTeam = $(item).find('.shsNamD').find('a').first().text();
+      let homeTeam = $(item).find('.shsNamD').find('a').last().text();
+      let scoreArray = [];
+      $(item).find('.shsTotD').each(function(i, num){
+        scoreArray.push($(num).text());
+      });
+      let awayScore = scoreArray.slice(5, 10);
+      let homeScore = scoreArray.slice(10, 15);
+      output.push({
+        isFinal: isFinal,
+        awayTeam: awayTeam,
+        homeTeam: homeTeam,
+        awayScore: awayScore,
+        homeScore: homeScore
+      });
+    });
+
+    console.log(output);
+  })
 }
 
 function getData(url, cb){
   let options = {
     url: url,
-    headers: {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:32.0) Gecko/20100101 Firefox/32.0'}
+    headers: {
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
+      "referer": "http://stats.nba.com/scores/",
+    }
   }
   request({url: options, json: true}, function (error, response) {
     console.log(url);
