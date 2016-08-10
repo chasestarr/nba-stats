@@ -332,7 +332,7 @@ function scoreBoard(options, cb){
       });
     });
 
-    console.log(output);
+    cb(output);
   })
 }
 

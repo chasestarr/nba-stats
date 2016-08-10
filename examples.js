@@ -13,5 +13,5 @@ player = {
 nba.scoreBoard({gameDate: '03/16/2016'}, print);
 
 function print(data){
-  console.log(data.resultSets);
+  console.log(data);
 }
